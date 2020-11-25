@@ -1,18 +1,19 @@
-# PlatformIO CLI
+## PlatformIO CI
 
-- 自动拉取 Platformio-core；
-- 自动检查 Plafomio-core 是否更新；
-- 自动更新 platformio-core；
-- 自动测试 platformio 功能， 进行工程的创建，编译测试；
+- Auto pull Platformio-core；
+- Auto check Plafomio-core update or not；
+- Audo update  platformio-core；
+- Audo test platformio function: create project, compile and clean project；
 - 自动打包。
 
-## boards list：
+## PlatformIO CLI
+### boards list：
 
 ```shell
 platformio boards --json-output
 ```
 
-- --json-output: 以 json 格式输出
+- --json-output:  json type output
 
   ```shell
       {
