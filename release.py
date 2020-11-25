@@ -147,7 +147,7 @@ def install_platformio_core():
     """ update platformio version """
     old_path = os.getcwd()
     os.chdir(os.path.join(old_path, "platformio_core"))
-
+    os.system("python.exe get-pip.py")
     if os.system("python.exe -m pip install platformio --no-warn-script-location") != 0:
         sys.exit(1)
     os.system("python.exe -m pip list")
