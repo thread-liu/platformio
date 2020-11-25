@@ -64,7 +64,7 @@ def platformio_test(cwd):
         sys.exit(1)
 
     logging.info("list all platformio boards :")
-    os.system("pio boards")
+    os.system("platformio boards")
 
     logging.info("create a arduino project, works at Eclipse IDE :")
     os.mkdir(os.path.join(cwd, "prj_nucleo_h743zi"))
@@ -138,27 +138,34 @@ def update_platformio_core(json_path):
                 break
 
     logging.info("platformio will upgrade {0} ==> {1}".format(old_version, latest_version))
-    cmd = "python.exe -m pip install -U platformio=={0} --no-warn-script-location".format(latest_version)
+    python_path = os.path.join(os.getcwd(), "platformio_core", "python.exe")
+    cmd = "{0} -m pip install -U platformio=={1} --no-warn-script-location".format(python_path, latest_version)
     logging.info(cmd)
     os.system(cmd)
 
 
 def install_platformio_core():
     """ update platformio version """
-    old_path = os.getcwd()
-    os.chdir(os.path.join(old_path, "platformio_core"))
-    os.system("python.exe get-pip.py")
-    if os.system("python.exe -m pip install platformio --no-warn-script-location") != 0:
+    cwd = os.getcwd()
+    python_path = os.path.join(cwd, "platformio_core", "python.exe")
+    pip_path = os.path.join(cwd, "platformio_core", 'get-pip.py')
+
+    cmd = "{0} {1} --no-warn-script-location".format(python_path, pip_path)
+    logging.info("install pip : {0}".format(cmd))
+    os.system(cmd)
+
+    cmd = "{0} -m pip install platformio --no-warn-script-location".format(python_path)
+    logging.info("install platfromio-core : {0}".format(cmd))
+    if os.system(cmd) != 0:
         sys.exit(1)
-    os.system("python.exe -m pip list")
+    os.system("{0} -m pip list".format(python_path))
 
-    os.system("python.exe -m pip list --outdated --format=json > py_pip.json")
-    json_path = os.path.join(old_path, "platformio_core", "py_pip.json")
+    json_path = os.path.join(cwd, "platformio_core", "py_pip.json")
+    os.system("{0} -m pip list --outdated --format=json > {1}".format(python_path, json_path))
+    logging.info("check platformio-core update is or not")
     update_platformio_core(json_path)
-
-    os.system("python.exe -m pip list")
-    os.chdir(old_path)
-
+    os.system("{0} -m pip list".format(python_path))
+    
     return 0
 
 

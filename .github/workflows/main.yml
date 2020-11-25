@@ -12,13 +12,18 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+    fail-fast: false
+    matrix:
+      os: [ubuntu, macos, windows]
+      python: [3.5, 3.6, 3.7, 3.8]
     steps:
         - uses: actions/checkout@v2
         - name: Set up Python
           uses: actions/setup-python@master
           with:
-            python-version: 3.7
+            python-version: ${{ matrix.python }}
         
         - name: Release Platformio
           run: |
