@@ -4,7 +4,6 @@
 - Auto check Plafomio-core update or not；
 - Audo update  platformio-core；
 - Audo test platformio function: create project, compile and clean project；
-- 自动打包。
 
 ## PlatformIO CLI
 ### boards list：
